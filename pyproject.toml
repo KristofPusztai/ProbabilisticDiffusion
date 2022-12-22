@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools>=49.2.1", "torch >= 1.13.0", "tqdm>=4.64.1"]
+build-backend = "setuptools.build_meta"
+[project]
+name = "ProbabilisticDiffusion"
+version = "0.99.99"
+authors = [
+  { name="Kristof Pusztai", email="kpusztai@berkeley.edu" },
+]
+description = "A PyTorch implementation of De-noising Diffusion Probabilistic Models"
+readme = "README.md"
+requires-python = ">=3.7"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: Apache Software License",
+    "Operating System :: OS Independent",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/KristofPusztai/ProbabilisticDiffusion"
