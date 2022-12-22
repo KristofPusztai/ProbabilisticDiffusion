@@ -48,7 +48,7 @@ class ConditionalModel(nn.Module):
         x = F.softplus(self.lin2(x, y))
         return self.lin3(x)
 ```
-#### Defining Diffusiong Based Learning Model
+#### Defining Diffusion Based Learning Model
 We define our diffusion based model with 200 timesteps, MSE loss (although the original algorithm specifies just SSE but we found that MSE works as well),
 beta start and end values of 1e-5, 1e-2 respectively with a linear schedule, and use the 
 ADAM optimizer with a learning rate of 1e-3.
