@@ -1,11 +1,11 @@
 Metadata-Version: 2.1
 Name: ProbabilisticDiffusion
-Version: 1.0.0
+Version: 1.0.1
 Summary: A PyTorch implementation of De-noising Diffusion Probabilistic Models
 Author-email: Kristof Pusztai <kpusztai@berkeley.edu>
 Project-URL: Homepage, https://github.com/KristofPusztai/ProbabilisticDiffusion
 Classifier: Programming Language :: Python :: 3
-Classifier: License :: OSI Approved :: Apache Software License
+Classifier: License :: OSI Approved :: MIT License
 Classifier: Operating System :: OS Independent
 Requires-Python: >=3.7
 Description-Content-Type: text/markdown
