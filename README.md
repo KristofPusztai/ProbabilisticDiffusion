@@ -2,10 +2,16 @@
 This is a PyTorch implementation of the training algorithm found in [Denoising Diffusion Probabilistic Models](https://arxiv.org/abs/2006.11239).
 
 Specifically, we implement the following training procedure:
-![image](https://lilianweng.github.io/posts/2021-07-11-diffusion-models/DDPM-algo.png)
+![image](https://github.com/KristofPusztai/ProbabilisticDiffusion/img/DDPM-algo.png)
 
 Where $\epsilon_\theta$  represents the user defined model with learnable parameters $\theta$.
 ## Usage
+The data we use for the below examples is a set of randomly generated points points lying on a circle of radius 2
+and added i.i.d gaussian noise with SD of 0.3 to x and y axes:
+
+![image](https://github.com/KristofPusztai/ProbabilisticDiffusion/img/data.png)
+
+The Jupyter Notebook with this example can be found on GitHub [here](https://github.com/KristofPusztai/empirical-bayes-ProbabilisticDiffusion/blob/main/circular_data.ipynb).
 ### Defining Model
 #### Defining $\epsilon_\theta$
 Below we define our model with the parameters we would like to learn. In this case we use a simple
@@ -38,7 +44,7 @@ class ConditionalModel(nn.Module):
 ```
 #### Defining Diffusiong Based Learning Model
 We define our diffusion based model with 200 timesteps, MSE loss (although the original algorithm specifies just SSE but we found that MSE works as well),
- beta start and end values of 1e-5, 1e-2 respectively with a linear schedule, and use the 
+beta start and end values of 1e-5, 1e-2 respectively with a linear schedule, and use the 
 ADAM optimizer with a learning rate of 1e-3.
 ```
 n_steps=200
@@ -47,7 +53,7 @@ loss = torch.nn.MSELoss(reduction='mean') # We use MSE for the loss which adhere
 optimizer = torch.optim.Adam(model.parameters(), lr=1e-3) # ADAM Optimizer Parameters for learning
 diffusion = Diffusion(data, n_steps, 1e-5, 1e-2, 'linear', model, loss, optimizer) # Note the (1e-5, 1e-2) are Beta start and end values
 ```
-#### Forward Sampling
+### Forward Sampling
 This allows us to see the forward diffusion process and ensure that
 our n_steps parameter is large enough. We want to see the data morph into
 standard gaussian distributed points by the last time step.
@@ -57,18 +63,21 @@ plt.show()
 stats.probplot(noised[:,0], dist="norm", plot=plt)
 plt.show()
 ```
-TODO: Put in plots 
+![image](https://github.com/KristofPusztai/ProbabilisticDiffusion/img/sample_normal.gif)
+![image](https://github.com/KristofPusztai/ProbabilisticDiffusion/img/qq_normal.gif)
+
 ### Training
 We train with batch size of 1,000 for 10,000 epochs.
 ```
 diffusion.train(1000, 10000)
 ```
+![image](https://github.com/KristofPusztai/ProbabilisticDiffusion/img/training.png)
 ### Sampling New Data
 We can sample new data based on the learned model via the following method:
 ```
 new_x = diffusion.sample(1000, 50, s=3)
 ```
-TODO: Plots
+![image](https://github.com/KristofPusztai/ProbabilisticDiffusion/img/diffusion.gif)
 
 This method automatically plots, but this can be turned off, in addition,
 we can specify which points to keep from these new samples, 'last' will only keep
