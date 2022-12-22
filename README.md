@@ -5,6 +5,12 @@ Specifically, we implement the following training procedure:
 ![image](https://github.com/KristofPusztai/ProbabilisticDiffusion/blob/master/img/DDPM-algo.png?raw=true)
 
 Where $\epsilon_\theta$  represents the user defined model with learnable parameters $\theta$.
+## Installation
+pip install:
+
+`pip install ProbabilisticDiffusion`
+
+For any additional needs, sdist and bdist can be found in the GitHub repo.
 ## Usage
 The data we use for the below examples is a set of randomly generated points points lying on a circle of radius 2
 and added i.i.d gaussian noise with SD of 0.3 to x and y axes:

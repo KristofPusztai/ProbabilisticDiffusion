@@ -14,6 +14,25 @@ class Diffusion:
                  beta_start: int, beta_end: int, schedule: str,
                  model: nn.Module, loss_fn: tLoss,
                  optimizer: Optimizer):
+        """
+        :param data: Torch tensor data, NxD dimension where N = number of data points, D = dimension of data
+        :type data: torch.tensor
+        :param num_diffusion_timesteps: Number of timesteps in diffusion model
+        :type num_diffusion_timesteps: int
+        :param beta_start: Starting value of the beta parameter as specified in the DDPM algorithm
+        :type beta_start: int
+        :param beta_end: Ending value of the beta parameter as specified in the DDPM algorithm
+        :type beta_end: int
+        :param schedule: Schedule type for beta, at each timestep, accepts 'linear', 'quad', 'warmup10', 'warmup50',
+        'const', 'jsd'
+        :type schedule: str
+        :param model: PyTorch model to be trained by the DDPM training procedure to learn the reverse diffusion
+        :type model: torch.nn.Module
+        :param loss_fn: PyTorch loss function to be minimized, in DDPM case it is SSE but MSE will equivalently minimize
+        :type loss_fn: torch.nn.modules.loss._Loss
+        :param optimizer: Gradient based optimizer method used to minimize loss
+        :type optimizer: torch.optim.Optimizer
+        """
         self.data = data
         self.model = model
         self.loss_fn = loss_fn
@@ -25,6 +44,18 @@ class Diffusion:
         self.alpha_bar = torch.cumprod(self.alphas, 0)
 
     def train(self, batch_size: int, epochs: int, plot_loss: bool = True, sig_fig: int = 3):
+        """
+        :param batch_size: Batch size for training
+        :type batch_size: int
+        :param epochs: Number of training epochs
+        :type epochs: int
+        :param plot_loss: Flag on whether to plot loss at the end of training or not
+        :type plot_loss: bool
+        :param sig_fig: Number of significant figures to include in the loss displayed on TQDM progress bar
+        :type sig_fig: int
+        :return: None
+        :rtype: None
+        """
         n = len(self.data)
         batch_in_epoch = math.ceil(n/batch_size)
         if plot_loss:
@@ -65,6 +96,18 @@ class Diffusion:
             
     @torch.no_grad()
     def forward(self, t: int, plot: bool = True, plot_idx: Tuple[int, int] = (0, 1), **kwargs):
+        """
+        :param t: Timestep to move forward in the diffusion process to
+        :type t: int
+        :param plot: Plotting flag for diffused data
+        :type plot: bool
+        :param plot_idx: 2D Indices of desired dimensions of data to plot on x-y plot
+        :type plot_idx: Tuple[int, int]
+        :param kwargs: Keyword args for matplotlib plot parameters
+        :type kwargs: **kwargs
+        :return: Diffused data
+        :rtype: torch.tensor
+        """
         d = self.data.shape[1]
         if plot:
             assert len(plot_idx) == 2, 'Specified Plot Axes are not 2d, cannot plot'
@@ -86,6 +129,21 @@ class Diffusion:
     @torch.no_grad()
     def sample(self, n: int, plot_intervals: Union[None, int] = None, plot_idx: Tuple[int, int] = (0, 1),
                keep: Union[None, str, Tuple[int]] = None, **kwargs):
+        """
+        :param n: Number of new samples to generate
+        :type n: int
+        :param plot_intervals: Intervals at which to plot, can either be None to not plot, or integer
+        :type plot_intervals: Union[None, int]
+        :param plot_idx: 2D Indices of desired dimensions of data to plot on x-y plot
+        :type plot_idx: Tuple[int, int]
+        :param keep: Timesteps at which to keep the new sampled data, accepts, 'all', 'last', or a list of desired
+                     timesteps to keep
+        :type keep: Union[None, str, Tuple[int]]
+        :param kwargs: Keyword args for matplotlib plot parameters
+        :type kwargs: **kwargs
+        :return: Array torch tensors containing new sampled data points at the specified timesteps to keep
+        :rtype: List[torch.tensor]
+        """
         if plot_intervals:
             assert len(plot_idx) == 2, '2D plotting only'
         x_t = torch.randn((n, self.data.shape[1]))
