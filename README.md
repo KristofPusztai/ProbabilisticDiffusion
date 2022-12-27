@@ -1,3 +1,6 @@
+![version](https://img.shields.io/pypi/v/ProbabilisticDiffusion)
+![license](https://img.shields.io/pypi/l/ProbabilisticDiffusion)
+![GitHub issues](https://img.shields.io/github/issues/KristofPusztai/ProbabilisticDiffusion)
 # ProbabilisticDiffusion
 This is a PyTorch implementation of the training algorithm found in [Denoising Diffusion Probabilistic Models](https://arxiv.org/abs/2006.11239).
 

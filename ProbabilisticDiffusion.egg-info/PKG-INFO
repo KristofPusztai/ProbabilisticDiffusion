@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: ProbabilisticDiffusion
-Version: 1.0.2
+Version: 1.0.3
 Summary: A PyTorch implementation of De-noising Diffusion Probabilistic Models
 Author-email: Kristof Pusztai <kpusztai@berkeley.edu>
 Project-URL: Homepage, https://github.com/KristofPusztai/ProbabilisticDiffusion
@@ -10,6 +10,9 @@ Classifier: Operating System :: OS Independent
 Requires-Python: >=3.7
 Description-Content-Type: text/markdown
 
+![version](https://img.shields.io/pypi/v/ProbabilisticDiffusion)
+![license](https://img.shields.io/pypi/l/ProbabilisticDiffusion)
+![GitHub issues](https://img.shields.io/github/issues/KristofPusztai/ProbabilisticDiffusion)
 # ProbabilisticDiffusion
 This is a PyTorch implementation of the training algorithm found in [Denoising Diffusion Probabilistic Models](https://arxiv.org/abs/2006.11239).
 
