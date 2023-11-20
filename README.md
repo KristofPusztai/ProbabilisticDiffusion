@@ -1,6 +1,8 @@
-![version](https://img.shields.io/pypi/v/ProbabilisticDiffusion)
+[![GitHub Action Badge](https://github.com/KristofPusztai/ProbabilisticDiffusion/actions/workflows/pytests.yml/badge.svg)](https://github.com/KristofPusztai/ProbabilisticDiffusion/actions)
+[![codecov](https://codecov.io/gh/KristofPusztai/ProbabilisticDiffusion/graph/badge.svg?token=5BLB6GHC7S)](https://codecov.io/gh/KristofPusztai/ProbabilisticDiffusion)
+[![version](https://img.shields.io/pypi/v/ProbabilisticDiffusion)](https://pypi.org/project/ProbabilisticDiffusion/)
 ![license](https://img.shields.io/pypi/l/ProbabilisticDiffusion)
-![GitHub issues](https://img.shields.io/github/issues/KristofPusztai/ProbabilisticDiffusion)
+[![GitHub issues](https://img.shields.io/github/issues/KristofPusztai/ProbabilisticDiffusion)](https://github.com/KristofPusztai/ProbabilisticDiffusion/issues)
 # ProbabilisticDiffusion
 This is a PyTorch implementation of the training algorithm found in [Denoising Diffusion Probabilistic Models](https://arxiv.org/abs/2006.11239).
 
@@ -26,7 +28,11 @@ The Jupyter Notebook with this example can be found on GitHub [here](https://git
 Below we define our model with the parameters we would like to learn. In this case we use a simple
 architecture with a combination of PyTorch Linear layers with Softplus activations, as well as an embedding to take into
 account the timestep, $t$, which we also include in the input (the y value).
-```
+```python
+import torch.nn as nn
+import torch.nn.functional as F
+
+
 class ConditionalLinear(nn.Module):
     def __init__(self, num_in, num_out, n_steps):
         super(ConditionalLinear, self).__init__()
@@ -55,7 +61,10 @@ class ConditionalModel(nn.Module):
 We define our diffusion based model with 200 timesteps, MSE loss (although the original algorithm specifies just SSE but we found that MSE works as well),
 beta start and end values of 1e-5, 1e-2 respectively with a linear schedule, and use the 
 ADAM optimizer with a learning rate of 1e-3.
-```
+```python
+from ProbabilisticDiffusion import Diffusion
+import torch
+
 n_steps=200
 model = ConditionalModel(n_steps)
 loss = torch.nn.MSELoss(reduction='mean') # We use MSE for the loss which adheres to the gradient step procedure defined
@@ -66,9 +75,10 @@ diffusion = Diffusion(data, n_steps, 1e-5, 1e-2, 'linear', model, loss, optimize
 This allows us to see the forward diffusion process and ensure that
 our n_steps parameter is large enough. We want to see the data morph into
 standard gaussian distributed points by the last time step.
-```
+```python
+import scipy.stats as stats
+
 noised = diffusion.forward(199, s=5)
-plt.show()
 stats.probplot(noised[:,0], dist="norm", plot=plt)
 plt.show()
 ```

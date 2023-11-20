@@ -35,3 +35,10 @@ def preserve_zeros(num, desired_length):
         str_num += '0'
         post_decimal = re.findall(r'\..*', str_num)[0].replace('.', '')
     return str_num
+
+
+def generate_circular(n, size):
+    radians = np.random.uniform(low=0.0, high=2*np.pi, size=n)
+    x = size * np.cos(radians)
+    y = size * np.sin(radians)
+    return x, y

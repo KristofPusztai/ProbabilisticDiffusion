@@ -124,6 +124,7 @@ class Diffusion:
             plt.xlabel('X')
             plt.ylabel('Y')
             plt.title(f'Samples At Time {t}')
+            plt.show()
         return data_t
 
     @torch.no_grad()
@@ -145,12 +146,13 @@ class Diffusion:
         :rtype: List[torch.tensor]
         """
         if plot_intervals:
-            assert len(plot_idx) == 2, '2D plotting only'
+            assert plot_intervals > 0, 'Plot Intervals Must Be Greater Than 0'
+            assert len(plot_idx) == 2, '2D plotting only, specify 2 columns to plot only'
         x_t = torch.randn((n, self.data.shape[1]))
         x = None
         if keep == 'all':
             x = [x_t]
-        elif type(keep) == tuple or type(keep) == list:
+        elif type(keep) is tuple or type(keep) is list:
             x = []
         for t in range(self.T-1, -1, -1):
             z = torch.randn_like(x_t)
@@ -163,12 +165,10 @@ class Diffusion:
             x_t = mean + sigma_t * z
             if keep == 'all':
                 x.append(x_t)
-            elif type(keep) == tuple or type(keep) == list:
+            elif type(keep) is tuple or type(keep) is list:
                 if t in keep:
                     x.append(x_t)
             if plot_intervals:
-                assert plot_intervals > 0, 'Plot Intervals Must Be Greater Than 0'
-                assert len(plot_idx) == 2, 'Specified index data is not 2d, cannot plot'
                 if (t % plot_intervals) == 0:
                     plt.scatter(x_t[:, plot_idx[0]], x_t[:, plot_idx[1]], **kwargs)
                     plt.xlabel('X')
