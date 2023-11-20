@@ -1,7 +1,8 @@
-[![GitHub Action Badge](https://github.com/KristofPusztai/ProbabilisticDiffusion/actions/workflows/pytests.yml/badge.svg)](https://github.com/KristofPusztai/ProbabilisticDiffusion/actions)
-[![codecov](https://codecov.io/gh/KristofPusztai/ProbabilisticDiffusion/graph/badge.svg?token=5BLB6GHC7S)](https://codecov.io/gh/KristofPusztai/ProbabilisticDiffusion)
 [![version](https://img.shields.io/pypi/v/ProbabilisticDiffusion)](https://pypi.org/project/ProbabilisticDiffusion/)
+[![GitHub Action Badge](https://github.com/KristofPusztai/ProbabilisticDiffusion/actions/workflows/pytests.yml/badge.svg)](https://github.com/KristofPusztai/ProbabilisticDiffusion/actions)
+[![codecov](https://codecov.io/gh/KristofPusztai/ProbabilisticDiffusion/graph/badge.svg?token=4EOWRAV5HL)](https://codecov.io/gh/KristofPusztai/ProbabilisticDiffusion)
 ![license](https://img.shields.io/pypi/l/ProbabilisticDiffusion)
+[![downloads](https://static.pepy.tech/badge/probabilisticdiffusion)](https://www.pepy.tech/projects/probabilisticdiffusion)
 [![GitHub issues](https://img.shields.io/github/issues/KristofPusztai/ProbabilisticDiffusion)](https://github.com/KristofPusztai/ProbabilisticDiffusion/issues)
 # ProbabilisticDiffusion
 This is a PyTorch implementation of the training algorithm found in [Denoising Diffusion Probabilistic Models](https://arxiv.org/abs/2006.11239).
